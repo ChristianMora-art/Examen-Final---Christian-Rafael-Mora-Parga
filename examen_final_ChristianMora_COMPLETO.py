@@ -45,8 +45,8 @@ if __name__ == '__main__':
     print('Porcentaje aproximado de pixeles de césped es: ', round(porcen_cesped_pix, 1), '% y de otros es: ',
           round(porcen_otros_pix, 1), '%')
 
-    #cv2.imshow("Punto 1, imagen binaria", mask_dilated)
-    #cv2.waitKey(0)
+    cv2.imshow("Punto 1, imagen binaria", mask_dilated)
+    cv2.waitKey(0)
 
     # ==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.
     # PUNTO 2, reconocimiento de jugadores/arbitro
@@ -80,15 +80,15 @@ if __name__ == '__main__':
             cv2.rectangle(copia_image, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
     print('El número de jugadores/arbitro hallados en la imagen es: ', num_personas)
-    #cv2.imshow("Punto 2", copia_image)
-    #cv2.waitKey(0)
+    cv2.imshow("Punto 2", copia_image)
+    cv2.waitKey(0)
 
     # ==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.
     # PUNTO 3, recta paralela
     # ==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.==.
 
     copia2_image = image.copy()
-    '''print('Seleccione 3 puntos, los dos primeros para definir una recta, y el tercero para generar una recta paralela '
+    print('Seleccione 3 puntos, los dos primeros para definir una recta, y el tercero para generar una recta paralela '
           'a la primera, oprima "x" apenas haya seleccionado los 3 puntos')
 
     points = []
@@ -115,9 +115,6 @@ if __name__ == '__main__':
 
     N = len(points_a)
     assert N == 3, 'Se requieren  3 puntos por imagen (2  de la primera línea, 1  nueva paralela)'
-'''
-
-    points_a = [(466, 830), (1241, 660), (1242, 848)]
 
     cv2.line(copia2_image, (points_a[0]), (points_a[1]), (255, 0, 0), thickness=3, lineType=8)
     m = (points_a[0][1] - points_a[1][1]) / (points_a[0][0] - points_a[1][0])
@@ -125,7 +122,6 @@ if __name__ == '__main__':
     b1 = round(points_a[0][1] - m*points_a[0][0]) # o b2 = round(points_a[1][1] - m1 * points_a[1][0])
     xf = copia2_image.shape[1]
     yf = round(m*xf + b1)
-    print(xf, points_a, m, b1, yf)
 
     c1, c2 = -1, -1
     homogenea_recta1 = (m / c1, b1 / c1, c1)
@@ -143,6 +139,6 @@ if __name__ == '__main__':
         cv2.circle(copia2_image, punto, radius=7, color=(255, 255, 0), thickness=-1)
         cv2.putText(copia2_image, f"P{count}", punto, cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 0), 1)
         count += 1
-
+    print('coodenadas homogenas de ambas rectas: y1 = ', homogenea_recta1, ', y2 = ', homogenea_recta2)
     cv2.imshow("Punto 3", copia2_image)
     cv2.waitKey(0)
